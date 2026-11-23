@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#101827" />
+  <title>Libra — Library Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="Libra home"><span class="brand-mark">L</span><span>libra<span class="brand-dot">.</span><small>LIBRARY DESK</small></span></a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav">
+        <button class="nav-item active" data-page="dashboard"><span>▦</span> Overview</button>
+        <button class="nav-item" data-page="books"><span>▤</span> Books</button>
+        <button class="nav-item" data-page="members"><span>♙</span> Members</button>
+        <button class="nav-item" data-page="circulation"><span>⇄</span> Issue &amp; return</button>
+        <button class="nav-item" data-page="reports"><span>▥</span> Reports</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="help-card"><div class="help-icon">✦</div><strong>Your library, in sync.</strong><p>Manage books and members from one simple desk.</p></div>
+        <div class="profile"><div class="avatar">AD</div><div><strong>Administrator</strong><small>Library staff</small></div><span class="online"></span></div>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div class="breadcrumb">Library / <strong id="crumb">Overview</strong></div>
+        <div class="top-actions"><span class="today" id="today"></span><button class="icon-button" title="Notifications">♧</button><div class="top-avatar">AD</div></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><div class="eyebrow">LIBRARY OVERVIEW</div><h1>Good evening, Admin <span>✦</span></h1><p class="muted">Here’s what’s happening in your library today.</p></div><button class="btn btn-primary" data-action="add-book">＋ Add a book</button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-top"><span>Total books</span><span class="stat-icon lavender">▤</span></div><strong id="stat-books">0</strong><small><i class="green-dot"></i> In your collection</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Books issued</span><span class="stat-icon peach">⇧</span></div><strong id="stat-issued">0</strong><small>Currently with members</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Registered members</span><span class="stat-icon mint">♙</span></div><strong id="stat-members">0</strong><small>Students &amp; faculty</small></article>
+          <article class="stat-card"><div class="stat-top"><span>Overdue books</span><span class="stat-icon rose">◷</span></div><strong id="stat-overdue">0</strong><small>Need to be returned</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel activity-panel"><div class="panel-heading"><div><h2>Recent activity</h2><p class="muted">Latest library transactions</p></div><button class="text-button" data-page-link="circulation">View all →</button></div><div id="recent-activity" class="activity-list"></div></article>
+          <article class="panel quick-panel"><div class="panel-heading"><div><h2>Quick actions</h2><p class="muted">Common tasks, one click away</p></div></div><button class="quick-action" data-action="add-book"><span class="quick-icon lavender">＋</span><span><b>Add new book</b><small>Add a title to the collection</small></span><em>→</em></button><button class="quick-action" data-action="add-member"><span class="quick-icon mint">♙</span><span><b>Register member</b><small>Create a student or faculty profile</small></span><em>→</em></button><button class="quick-action" data-action="issue-book"><span class="quick-icon peach">⇧</span><span><b>Issue a book</b><small>Record a new book loan</small></span><em>→</em></button><button class="quick-action" data-page-link="reports"><span class="quick-icon rose">▥</span><span><b>Library report</b><small>Review your library summary</small></span><em>→</em></button></article>
+        </div>
+        <article class="panel popular-panel"><div class="panel-heading"><div><h2>Collection snapshot</h2><p class="muted">A quick look at your available inventory</p></div><button class="text-button" data-page-link="books">Manage books →</button></div><div id="collection-snapshot" class="snapshot-grid"></div></article>
+      </section>
+
+      <section class="page" id="page-books">
+        <div class="page-heading"><div><div class="eyebrow">YOUR COLLECTION</div><h1>Books</h1><p class="muted">Add, search and manage your library collection.</p></div><button class="btn btn-primary" data-action="add-book">＋ Add a book</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="book-search" placeholder="Search by title, author or ISBN..." /></div><select id="book-filter"><option value="all">All books</option><option value="available">Available</option><option value="issued">Issued</option></select></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>BOOK</th><th>ISBN</th><th>CATEGORY</th><th>INVENTORY</th><th>STATUS</th><th></th></tr></thead><tbody id="books-table"></tbody></table></div><div class="table-footer" id="books-count"></div></div>
+      </section>
+
+      <section class="page" id="page-members">
+        <div class="page-heading"><div><div class="eyebrow">PEOPLE</div><h1>Members</h1><p class="muted">Manage student and faculty library accounts.</p></div><button class="btn btn-primary" data-action="add-member">＋ Register member</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="member-search" placeholder="Search members by name or ID..." /></div><select id="member-filter"><option value="all">All members</option><option value="Student">Students</option><option value="Faculty">Faculty</option></select></div>
+        <div class="member-grid" id="members-grid"></div>
+      </section>
+
+      <section class="page" id="page-circulation">
+        <div class="page-heading"><div><div class="eyebrow">LOAN MANAGEMENT</div><h1>Issue &amp; return</h1><p class="muted">Track borrowed books, due dates and late fees.</p></div><button class="btn btn-primary" data-action="issue-book">＋ Issue a book</button></div>
+        <div class="toolbar"><div class="search-box"><span>⌕</span><input id="loan-search" placeholder="Search by book or member..." /></div><select id="loan-filter"><option value="active">Active loans</option><option value="all">All transactions</option><option value="overdue">Overdue</option><option value="returned">Returned</option></select></div>
+        <div class="panel table-panel"><div class="table-wrap"><table><thead><tr><th>BOOK / MEMBER</th><th>ISSUED ON</th><th>DUE DATE</th><th>FINE</th><th>STATUS</th><th>ACTION</th></tr></thead><tbody id="loans-table"></tbody></table></div><div class="table-footer" id="loans-count"></div></div>
+      </section>
+
+      <section class="page" id="page-reports">
+        <div class="page-heading"><div><div class="eyebrow">LIBRARY INSIGHTS</div><h1>Reports</h1><p class="muted">A summary of your library’s current records.</p></div><button class="btn btn-secondary" id="export-report">↓ Export CSV</button></div>
+        <div class="stats-grid report-stats"><article class="stat-card"><div class="stat-top"><span>Total titles</span><span class="stat-icon lavender">▤</span></div><strong id="report-titles">0</strong><small>Distinct book records</small></article><article class="stat-card"><div class="stat-top"><span>Available copies</span><span class="stat-icon mint">✓</span></div><strong id="report-available">0</strong><small>Ready to issue</small></article><article class="stat-card"><div class="stat-top"><span>Books returned</span><span class="stat-icon peach">↩</span></div><strong id="report-returned">0</strong><small>All-time returns</small></article><article class="stat-card"><div class="stat-top"><span>Fines collected</span><span class="stat-icon rose">₹</span></div><strong id="report-fines">₹0</strong><small>Recorded late fees</small></article></div>
+        <div class="report-grid"><article class="panel"><h2>Inventory by category</h2><p class="muted">Number of book copies in each category</p><div id="category-report" class="category-report"></div></article><article class="panel"><h2>Member breakdown</h2><p class="muted">Registered library members</p><div id="member-report" class="category-report"></div></article></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modal-backdrop"><div class="modal" role="dialog" aria-modal="true"><div class="modal-header"><div><div class="eyebrow" id="modal-eyebrow">LIBRARY DESK</div><h2 id="modal-title">Add a book</h2></div><button class="close-button" id="modal-close">×</button></div><form id="modal-form"><div id="modal-fields" class="form-grid"></div><div class="modal-actions"><button type="button" class="btn btn-secondary" id="modal-cancel">Cancel</button><button type="submit" class="btn btn-primary" id="modal-submit">Save changes</button></div></form></div></div>
+  <div class="toast" id="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
